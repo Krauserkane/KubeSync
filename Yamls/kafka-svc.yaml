@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka
+spec:
+  clusterIP: None
+  ports:
+    - name: kafka-internal
+      port: 9092         # Internal port for cluster communication
+      targetPort: 9092   # Port on the Kafka pod
+    - name: kafka-external
+      port: 9094         # External port for client access
+      targetPort: 9094   # Port on the Kafka pod
+  selector:
+    app: kafka           # Make sure this matches the labels on your Kafka pod
+
+       # Use NodePort or ClusterIP if not on a cloud provider

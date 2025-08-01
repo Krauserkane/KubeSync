@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+  labels:
+    app: my-app # Add this label to match the service selector
+spec:
+  containers:
+  - name: my-container
+    image: localhost:5000/kubesync  # Replace with your desired container image
+    volumeMounts:
+    - mountPath: /files/  # Change this to the path where you want to mount
+      name: my-volume
+  volumes:
+  - name: my-volume
+    persistentVolumeClaim:
+      claimName: my-pvc
+  nodeSelector:  # Optional: specify the node you want the pod to run on
+    kubernetes.io/hostname: kind-worker2  # Replace <node-name> with your specific node name
